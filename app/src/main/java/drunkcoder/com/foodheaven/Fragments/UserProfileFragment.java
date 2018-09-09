@@ -8,6 +8,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
@@ -76,6 +84,7 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
                 setNeddedContentsVisibility(1);
                 break;
             case R.id.doneImageView:
+                updateUserProfile();
                 doneEditingImageView.setVisibility(View.GONE);
                 setNeddedContentsVisibility(2);
                 //UPDATE DATA INTO FIREBASE
@@ -85,6 +94,36 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
                 break;
 
         }
+    }
+
+    private void updateUserProfile() {
+
+        User user =MyApplication.getCurrentUser();
+        Plan plan=user.getSubscribedPlan();
+        user.setName(name.getText().toString());
+        user.setEmail(email.getText().toString());
+
+        if(!user.getPhoneNumber().equals(phone.getText().toString())){
+            user.setPhoneNumber(phone.getText().toString());
+
+        }
+
+
+
+
+
+
+
+        FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                    Toast.makeText(getContext(), "Profile updated", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getContext(), "Try Again!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void goTOWallet() {

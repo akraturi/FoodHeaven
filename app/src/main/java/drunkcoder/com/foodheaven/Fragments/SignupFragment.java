@@ -68,7 +68,8 @@ public class SignupFragment extends Fragment implements View.OnClickListener {
     private String mobileNumber;
     private String email;
     private String password,name;
-    private Address userAddress;
+    private Address userAddress=null;
+    private  EditText place;
 
     private PlaceAutocompleteFragment placeAutocompleteFragment;
     private List<User> users;
@@ -106,7 +107,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener {
         //hiding search button before fragment
         placeAutocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_button).setVisibility(View.GONE);
         //setting hint for ediittext
-        EditText place;
+
         place= ((EditText)placeAutocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_input));
         place.setHint("Enter Your Address");
        place.setTextColor(Color.WHITE);
@@ -132,7 +133,6 @@ public class SignupFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.signupButton:
-                removePlaceFragment();
                 registerUser();
                 break;
             case R.id.loginTextview:
@@ -148,8 +148,8 @@ public class SignupFragment extends Fragment implements View.OnClickListener {
     private void removePlaceFragment() {
 
         getActivity().getFragmentManager().beginTransaction().remove(getActivity().getFragmentManager().findFragmentById(R.id.addressAutoCompleteFragment)).commit();
-    }
 
+    }
 
     public void registerUser()
     {
@@ -176,9 +176,23 @@ public class SignupFragment extends Fragment implements View.OnClickListener {
             passwordEditText.requestFocus();
             return;
         }
+        if(userAddress==null){
+            place.requestFocus();
+            Toast.makeText(getActivity(), "Please select an Address First!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        if(nameEditText.getText().toString().trim().length()<=0){
+            nameEditText.setError("Enter your name first!");
+            nameEditText.requestFocus();
+            return;
+        }
+
+
+        removePlaceFragment();
 
         if(!checkAlreadyExists()) {
+
             verifyPhoneNumber();
         }else {
             Toast.makeText(hostingActivity, "You are already registered,Please Login", Toast.LENGTH_SHORT).show();

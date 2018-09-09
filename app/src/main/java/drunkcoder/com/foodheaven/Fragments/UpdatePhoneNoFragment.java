@@ -11,7 +11,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.location.places.Place;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
@@ -24,7 +23,6 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
-import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
@@ -35,7 +33,7 @@ import drunkcoder.com.foodheaven.Models.Address;
 import drunkcoder.com.foodheaven.Models.User;
 import drunkcoder.com.foodheaven.R;
 
-public class VerificationFragment extends Fragment implements View.OnClickListener {
+public class UpdatePhoneNoFragment extends Fragment implements View.OnClickListener {
 
     private EditText otpEditText;
     private TextView verificationTextView;
@@ -55,7 +53,7 @@ public class VerificationFragment extends Fragment implements View.OnClickListen
     private String password;
     private Address address;
 
-    public static VerificationFragment newInstance(String email,String mobile,String password,Address userAddress,String name) {
+    public static UpdatePhoneNoFragment newInstance(String email, String mobile, String password, Address userAddress, String name) {
 
         Bundle args = new Bundle();
         args.putString("mobile",mobile);
@@ -63,7 +61,7 @@ public class VerificationFragment extends Fragment implements View.OnClickListen
         args.putString("password",password);
         args.putSerializable("userAddress", userAddress);
         args.putString("name",name);
-        VerificationFragment fragment = new VerificationFragment();
+        UpdatePhoneNoFragment fragment = new UpdatePhoneNoFragment();
         fragment.setArguments(args);
         return fragment;
     }
