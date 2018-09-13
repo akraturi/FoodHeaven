@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:minHeight="1000dp"
+    android:maxHeight="1000dp"
     android:background="@drawable/background_xml">
 
     <RelativeLayout

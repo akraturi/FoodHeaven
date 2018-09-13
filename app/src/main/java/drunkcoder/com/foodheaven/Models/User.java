@@ -1,6 +1,8 @@
 package drunkcoder.com.foodheaven.Models;
 
 
+import java.io.Serializable;
+
 public class User {
 
     public String name;
